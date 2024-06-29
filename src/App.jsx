@@ -1,39 +1,56 @@
-import { useState } from 'react';
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home/Home';
+import NewComment from './pages/NewComment/NewComment';
+import Login from './pages/Login/Login';
+import Comment from './pages/Comment/Comment';
+import Profile from './pages/Profile/Profile';
 import './App.css';
-import Forum from './pages/Forum';
-import Login from './pages/Login';
-import Perfil from './pages/Perfil';
-import Ranking from './pages/Ranking';
-import InserirNovoComentario from './pages/InserirNovoComentario';
-import ComentarioDetalhe from './pages/ComentarioDetalhe';
-import Comentario from './components/Comentario';
 
-export default function App() {
-  const [page, setPage] = useState(0);
+const App = () => {
+  const [user, setUser] = useState(null); // Estado para armazenar o usuário logado
+
+  const handleLogin = (userData) => {
+    // Simula um login bem-sucedido
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    // Simula o logout
+    setUser(null);
+  };
 
   return (
-    <BrowserRouter>
-      <header>
-        <nav className="nav-container">
-          <Link className="nav-item" to="/">Fórum</Link>
-          <Link className="nav-item" to="/ranking">Ranking</Link>
-          <Link className="nav-item" to="/inserir">Novo comentário</Link>
-          <span className="nav-space"></span>
-          <Link className="nav-item nav-item-shop" to="/perfil">Perfil</Link>
-          <Link className="nav-item nav-item-shop" to="/login">Login</Link>
-        </nav>
-      </header>
-      <main>
+    <Router>
+      <Navbar user={user} onLogout={handleLogout} />
+      <div className="container">
         <Routes>
-          <Route path="/" element={<Forum />} />
-          <Route path="/ranking" element={<Ranking />} />
-          <Route path="/inserir" element={<InserirNovoComentario />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/comentario_detalhe/*" element={<ComentarioDetalhe />} />
+          <Route
+            exact
+            path="/"
+            element={<Home user={user} />}
+          />
+          <Route
+            path="/new-comment"
+            element={<NewComment user={user} />}
+          />
+          <Route
+            path="/login"
+            element={<Login onLogin={handleLogin} />}
+          />
+          <Route
+            path="/comment/:id" 
+            element={<Comment />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile user={user} />}
+          />
         </Routes>
-      </main>
-    </BrowserRouter>
+      </div>
+    </Router>
   );
-}
+};
+
+export default App;

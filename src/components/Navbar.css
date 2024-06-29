@@ -1,0 +1,33 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007BFF;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  
+  .navbar-left a,
+  .navbar-right a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .navbar-left a:hover,
+  .navbar-right a:hover {
+    text-decoration: underline;
+  }
+  
+  .navbar-right {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-right {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  
